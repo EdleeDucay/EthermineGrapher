@@ -1,7 +1,11 @@
 import { AppBar, Toolbar, Typography, Box, Button, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import React from 'react'
+import React, { useContext } from 'react'
 import { styled, alpha } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { CustomThemeContext } from '../contexts/ThemeContext';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -39,32 +43,42 @@ const Search = styled('div')(({ theme }) => ({
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        width: '20ch',
+        width: '100ch',
       },
     },
   }));
 
 export default function Navbar() {
+    const {currentTheme, setTheme} = useContext(CustomThemeContext)
+
+    function handleThemeChange(event) {
+        currentTheme === 'dark' ? setTheme('light') : setTheme('dark')
+    }
+
     return (
         // <AppBar>
          <AppBar position='sticky'>
             <Toolbar>
-                <img style={{maxHeight: 50}} src='logo192.png' alt="N/A" />
-                <Typography variant='h5' sx={{pl: 1}}>Ethermine Grapher</Typography>
-                <Search>
+                <img style={{maxHeight: 35}} src='logo192.png' alt="N/A" />
+                <Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography>
+                <Search >
                     <SearchIconWrapper>
                     <SearchIcon />
                     </SearchIconWrapper>
                     <StyledInputBase
                     placeholder="Ethereum Miner Address"
                     inputProps={{ 'aria-label': 'search' }}
+                    
                     />
                 </Search>
 
 
                 <Box sx={{ flexGrow: 1 }} />
-                <Box sx={{pr: 5}}>
-                    <Button href='./login' color='secondary' variant='contained'><Typography>Logout</Typography></Button>
+                <Box >
+                    <IconButton onClick={handleThemeChange} color="inherit">
+                        {currentTheme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
+                    {console.log(currentTheme)}
                 </Box>
 
             </Toolbar>
