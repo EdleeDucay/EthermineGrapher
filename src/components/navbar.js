@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography, Box, Button, InputBase } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -48,29 +48,37 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
 
-export default function Navbar() {
+export default function Navbar({setSearchInput}) {
     const {currentTheme, setTheme} = useContext(CustomThemeContext)
+    const searchRef = useRef(null)
 
     function handleThemeChange(event) {
         currentTheme === 'dark' ? setTheme('light') : setTheme('dark')
     }
 
+    function handleSubmit(e) {
+        e.preventDefault()
+        setSearchInput(searchRef.current.value)
+    }
+
     return (
-        // <AppBar>
          <AppBar position='sticky'>
             <Toolbar>
                 <img style={{maxHeight: 35}} src='logo192.png' alt="N/A" />
                 <Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography>
-                <Search >
-                    <SearchIconWrapper>
-                    <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                    placeholder="Ethereum Miner Address"
-                    inputProps={{ 'aria-label': 'search' }}
-                    
-                    />
-                </Search>
+                
+                <form onSubmit={handleSubmit}>
+                    <Search >
+                        <SearchIconWrapper>
+                        <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                        placeholder="Ethereum Miner Address"
+                        inputProps={{ 'aria-label': 'search' }}
+                        inputRef={searchRef}
+                        />
+                    </Search>
+                </form>
 
 
                 <Box sx={{ flexGrow: 1 }} />
@@ -78,7 +86,6 @@ export default function Navbar() {
                     <IconButton onClick={handleThemeChange} color="inherit">
                         {currentTheme === 'light' ? <Brightness7Icon /> : <Brightness4Icon />}
                     </IconButton>
-                    {console.log(currentTheme)}
                 </Box>
 
             </Toolbar>

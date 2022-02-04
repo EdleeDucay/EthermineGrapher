@@ -37,5 +37,8 @@ export const darkTheme = createTheme({
             default: '#303030',
             transition: '0.5s ease'
         },
+        text: {
+            primary: '#ffffff',
+          },
     },
 });
