@@ -1,11 +1,11 @@
-import { AppBar, Toolbar, Typography, Box, Button, InputBase } from '@mui/material'
+import { AppBar, Toolbar, Typography, Box, Button, InputBase, Link } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import React, { useContext, useRef } from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { CustomThemeContext } from '../contexts/ThemeContext';
+import { CustomThemeContext } from '../../contexts/ThemeContext';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -64,8 +64,8 @@ export default function Navbar({setSearchInput}) {
     return (
          <AppBar position='sticky'>
             <Toolbar>
-                <img style={{maxHeight: 35}} src='logo192.png' alt="N/A" />
-                <Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography>
+                <Link href="/home" sx={{mt: 1}}><img style={{maxHeight: 35}} src='logo192.png' alt="N/A"/></Link>
+                <Link href="/home" sx={{textDecoration: 'none'}} color={'#ffffff'}><Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography></Link>
                 
                 <form onSubmit={handleSubmit}>
                     <Search >

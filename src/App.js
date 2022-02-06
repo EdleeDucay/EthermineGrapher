@@ -1,43 +1,13 @@
-import React, {useState, useEffect} from 'react'
-import {Box, CssBaseline, Typography} from '@mui/material'
-import Navbar from './components/navbar';
-import Intro from './components/intro'
+import React from 'react'
+import {CssBaseline} from '@mui/material'
 import { CustomThemeProvider } from './contexts/ThemeContext';
-import {getDashboard} from './utility/EthermineApi.js'
+import Router from './routes'
 
-function App() {
-  const [searchInput, setSearchInput] = useState('')   
-  const [error, setError] = useState('')
-
-  const fetchDashboard = async () => {
-    const dash = await getDashboard(searchInput)
-    if (dash.status == 'ERROR') {
-      setError(dash.error)
-      return
-    } 
-
-    console.log(dash)
-  }
-
-  useEffect(() => {
-    setError('')
-    if (searchInput) {
-      fetchDashboard()
-    }
-    
-  }, [searchInput]);
-  
-
+function App() {    
   return (
     <CustomThemeProvider>
         <CssBaseline/>
-        {console.log(searchInput)}
-        <Navbar setSearchInput={setSearchInput}/>
-        <Box  >
-          {searchInput}
-        <Typography>error: {error}</Typography>
-        <Intro/>
-        </Box>        
+        <Router/>
 
     </CustomThemeProvider>
   );
