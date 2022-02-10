@@ -14,8 +14,8 @@ export default function Router() {
             children: [
                 { element: <Navigate to="/home" replace/> },
                 { path: 'home', element: <Home/>},
-                { path: 'dashboard', element: <Dashboard/> },
-                { path: 'payouts', element: <Payouts/> },
+                { path: `dashboard/:address`, element: <Dashboard/> },
+                { path: 'payouts/:address', element: <Payouts/> },
                 { path: '/', element: <Navigate to ='/home'/> },
                 { path: '*', element: <Navigate to="/404"/> }
             ]

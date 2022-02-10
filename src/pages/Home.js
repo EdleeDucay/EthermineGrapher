@@ -23,9 +23,6 @@ export default function Home() {
 
   return (
     <>
-
-      
-      {console.log(introData)}
       
       {introData &&
       <Grid container spacing={2} pt={3} alignItems="center" justifyContent="center">
@@ -60,7 +57,6 @@ export default function Home() {
       </Grid>
       }
 
-  {/* </Container> */}
   </>
 
   )
