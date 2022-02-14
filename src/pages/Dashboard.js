@@ -1,5 +1,7 @@
+import { Container } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import HashrateChart from '../components/HashrateChart.js';
 import {getDashboard} from '../utils/EthermineApi.js'
 
 export default function Dashboard(props) {
@@ -8,12 +10,15 @@ export default function Dashboard(props) {
   const [dashboard, setDashboard] = useState(null)
   const { state } = useLocation();
   
-  console.log(state)
 
   return (
     <>
-    {JSON.stringify(state)}
 
+    {state.currentStatistics.activeWorkers}
+    <Container>
+    <HashrateChart statistics={state.statistics}/>
+
+    </Container>
     </>
   );
 }

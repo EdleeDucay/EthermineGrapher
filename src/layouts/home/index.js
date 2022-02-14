@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from './Navbar'
 import {getDashboard} from '../../utils/EthermineApi.js'
+import HomeTabs from "./HomeTabs";
 
 export default function HomeLayout() {
     const [searchInput, setSearchInput] = useState('') 
@@ -25,9 +26,8 @@ export default function HomeLayout() {
     
     useEffect(() => {
       setError('')
-      if (searchInput) {
-        fetchDashboard()
-      }
+      if (searchInput) fetchDashboard()
+      
       
     }, [searchInput]);
 
