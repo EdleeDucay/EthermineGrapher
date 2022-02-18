@@ -10,8 +10,8 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
-  import faker from 'faker';
-  
+  import {Card, Typography} from '@mui/material'
+
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -25,48 +25,32 @@ import {
   export const options = {
     responsive: true,
     animation: {
-        duration: 150
+        duration: 2000
+    },
+    hover: {
+        animationDuration: 0
     },
     plugins: {
       legend: {
         position: 'top',
       },
-      title: {
-        display: true,
-        text: 'Hashrate',
-      },
     },
     scales: {
-        xAxes: [{
-            type: 'time',
-            ticks: {
-                autoSkip: true,
-                maxTicksLimit: 20,
+        y: {
+          ticks: {
+            callback: function(value, index, ticks) {
+              return value + ' MH/s'
             }
-        }]
+          }
+        }
     },
   };
-  
-//   const xAxes = [{
-//       type: 'time',
-//       ticks: {
-//           autoSkip: true,
-//           maxTicksLimit: 20
-//       }
-//   }]
-
-//  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'shit', 'shit'] ;
-
- 
   
 export default function HashrateChart(props) {
     const [labels, setLabels] = React.useState([])
     const [currentHashrateData, setCurrentHashrateData] = React.useState({})
     const [loading, setLoading] = React.useState(true)
 
-
-    console.log('labels', labels)
-    console.log(props.statistics)
     const setDataSets = () => {
         setCurrentHashrateData(
             {
@@ -74,16 +58,20 @@ export default function HashrateChart(props) {
                 datasets: [
                   {
                     label: 'Current Hashrate',
-                    data: labels.map((label, index) => props.statistics[index].currentHashrate),
+                    data: labels.map((label, index) => {
+                      return props.statistics[index].currentHashrate * Math.pow(10,-6)
+                    }),
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(255, 99, 132, 0.5)',
                   },
-                //   {
-                //     label: 'Dataset 2',
-                //     data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-                //     borderColor: 'rgb(53, 162, 235)',
-                //     backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                //   },
+                  {
+                    label: 'Reported Hashrate',
+                    data: labels.map((label, index) => {
+                     return props.statistics[index].reportedHashrate * Math.pow(10,-6)
+                    }),
+                    borderColor: 'rgb(53, 162, 235)',
+                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                  },
                 ],
               }
         )
@@ -102,11 +90,17 @@ export default function HashrateChart(props) {
         setTimeLabels()
         setDataSets()
         setLoading(false)
-    }, [setTimeLabels, setDataSets])
+    }, [loading])
+
 
     return (
         <>
-        {!loading && <Line options={options} data={currentHashrateData} />}
+        <Card sx={{p: 2, boxShadow: `0 4px 8px 0 rgba(0,0,0,0.2)`, borderRadius: 2, }}>
+          <Typography variant='h5' textAlign={'center'}>
+            Hashrate
+          </Typography>
+          {!loading && <Line options={options} data={currentHashrateData} />}
+        </Card>
         </>
 
     )
