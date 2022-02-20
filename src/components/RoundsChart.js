@@ -22,23 +22,6 @@ ChartJS.register(
     Legend
   );
   
-
-const labels = ['j','a','s','o','n','d','r'];
-
-const data = {
-    labels: labels,
-    datasets: [{
-      label: 'Payout',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      backgroundColor: [
-        '#c99d66'
-      ],
-      borderColor: [
-        '#c99d66'
-      ],
-    }]
-  };
-
   const options = {
     responsive: true,
     animation: {
@@ -55,6 +38,9 @@ const data = {
             title: {
               display: true,
               text: 'ETH'
+            },
+            ticks: {
+                precision: 6
             }
         }
     },
@@ -62,28 +48,53 @@ const data = {
 
 export default function RoundsChart({rounds}) {
     const [loading, setLoading] = useState(true)
-    const [blockLabels, setBlockLabels] = useState()
-    const [amounts, setAmounts] = useState()
+    const [data, setData] = useState({})
 
     const setX = () => {
+        const data = rounds.map((round, index) => {
+            if (index != rounds.length-1) {
+                return `${round.block}-${rounds[index+1].block}`
+            } 
+        })
 
+        return data.reverse()
     }
 
     const setY = () => {
+        const data = rounds.map((round, index) => {
+            return (round.amount * Math.pow(10, -18))
+        })
 
+        return data.reverse()
+    }
+
+    const setDataSets = () => {
+        const xData = setX()
+        const yData = setY()
+        console.log(yData)
+        setData({
+            labels: xData,
+            datasets: [{
+              label: 'Payout',
+              data: yData,
+              backgroundColor: [
+                '#c99d66'
+              ],
+              borderColor: [
+                '#c99d66'
+              ],
+            }]
+        })
     }
 
     useEffect(() => {
-        setX()
-        setY()
+        setDataSets() 
         setLoading(false)
     }, [loading])
     
 
     return (
         <>
-        {console.log(rounds)}
-
         <Card sx={{p: 2, boxShadow: `0 4px 8px 0 rgba(0,0,0,0.2)`, borderRadius: 2, }}>
             <Typography variant='h5' textAlign={'center'}>
                 Income during the last 1000 rounds

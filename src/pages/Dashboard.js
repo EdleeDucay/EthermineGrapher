@@ -29,7 +29,7 @@ export default function Dashboard(props) {
     fetchRounds()
     fetchCurrentStats()
     setLoading(false)
-  }, [loading])
+  }, [loading, address])
 
   return (
     <>
