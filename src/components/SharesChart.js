@@ -36,45 +36,40 @@ import {
       },
     },
     scales: {
-        y: {
-          ticks: {
-            callback: function(value, index, ticks) {
-              return value + ' MH/s'
-            }
-          },
-          title: {
-            display: true,
-            text: 'Hashrate'
-          }
+      y: {
+        title: {
+          display: true,
+          text: 'Shares'
         }
-    },
+      }
+  },
   };
   
-export default function HashrateChart(props) {
+export default function SharesChart(props) {
     const [labels, setLabels] = React.useState([])
-    const [currentHashrateData, setCurrentHashrateData] = React.useState({})
+    const [currentSharesData, setCurrentSharesData] = React.useState({})
     const [loading, setLoading] = React.useState(true)
 
     const setDataSets = () => {
-        setCurrentHashrateData(
+        setCurrentSharesData(
             {
                 labels,
                 datasets: [
                   {
-                    label: 'Current Hashrate',
+                    label: 'Valid Shares',
                     data: labels.map((label, index) => {
-                      return props.statistics[index].currentHashrate * Math.pow(10,-6)
+                      return props.statistics[index].validShares 
                     }),
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgb(84, 217, 72)',
+                    backgroundColor: 'rgba(36, 186, 22, 0.5)',
                   },
                   {
-                    label: 'Reported Hashrate',
+                    label: 'Stale Shares',
                     data: labels.map((label, index) => {
-                     return props.statistics[index].reportedHashrate * Math.pow(10,-6)
+                      return props.statistics[index].staleShares 
                     }),
-                    borderColor: 'rgb(53, 162, 235)',
-                    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                    borderColor: 'rgb(204, 75, 75)',
+                    backgroundColor: 'rgba(219, 50, 50, 0.5)',
                   },
                 ],
               }
@@ -101,9 +96,9 @@ export default function HashrateChart(props) {
         <>
         <Card sx={{p: 2, boxShadow: `0 4px 8px 0 rgba(0,0,0,0.2)`, borderRadius: 2, }}>
           <Typography variant='h5' textAlign={'center'}>
-            Hashrate
+            Shares
           </Typography>
-          {!loading && <Line options={options} data={currentHashrateData} />}
+          {!loading && <Line options={options} data={currentSharesData} />}
         </Card>
         </>
 

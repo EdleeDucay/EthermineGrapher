@@ -19,6 +19,11 @@ export async function getPayouts(address) {
     return response.data
 }
 
+export async function getRounds(address) {
+    const response = await EthermineApi.get(`miner/${address}/rounds`)
+    return response.data
+}
+
 export async function getCurrentStats(address) {
     const response = await EthermineApi.get(`miner/${address}/currentStats`)
     return response.data

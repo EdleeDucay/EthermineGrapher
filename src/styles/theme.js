@@ -26,7 +26,7 @@ export const lightTheme = createTheme({
 
     },
     typography: {
-        "fontFamily": "Trebuchet MS"
+        "fontFamily": "Trebuchet MS",
     }
 });
 

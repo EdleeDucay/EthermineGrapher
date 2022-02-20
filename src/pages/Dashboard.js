@@ -3,12 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import HashrateChart from '../components/HashrateChart.js';
 import MinerStatCard from '../components/MinerStatCard.js';
-import {getCurrentStats} from '../utils/EthermineApi.js'
+import RoundsChart from '../components/RoundsChart.js';
+import SharesChart from '../components/SharesChart.js';
+import {getCurrentStats, getRounds} from '../utils/EthermineApi.js'
 
 export default function Dashboard(props) {
   const {address} = useParams();
   const [error, setError] = useState('')
   const [currentStats, setCurrentStats] = useState(null)
+  const [rounds, setRounds] = useState()
   const { state } = useLocation();
   const [loading, setLoading] = useState(true)
 
@@ -17,15 +20,20 @@ export default function Dashboard(props) {
     setCurrentStats(response.data)
   }
 
+  const fetchRounds = async () => {
+    const response = await getRounds(address)
+    setRounds(response.data)
+  }
+
   useEffect(() => {
+    fetchRounds()
     fetchCurrentStats()
     setLoading(false)
   }, [loading])
 
   return (
     <>
-    {console.log(currentStats)}
-
+    
     <Container sx={{paddingBottom: 3}}>
     {currentStats &&
 
@@ -33,7 +41,7 @@ export default function Dashboard(props) {
 
       <Grid item xs={12} sm={12} md={12}>
         <Button href={`https://etherchain.org/account/${address}`} target='_blank' color={'secondary'} sx={{textDecoration: 'none'}}>
-          <Typography variant='h4'>
+          <Typography variant='h4' sx={{fontSize: {xs: '0.75rem', sm: '1.5rem', md: '2rem'} }}>
             {address}
           </Typography>
         </Button>
@@ -64,6 +72,10 @@ export default function Dashboard(props) {
     }
 
     <HashrateChart statistics={state.statistics}/>
+    <br/>
+    <SharesChart statistics={state.statistics}/>
+    <br/>
+    {rounds && <RoundsChart rounds={rounds}/>}
     </Container>
     
     </>
