@@ -15,7 +15,7 @@ export default function HomeLayout() {
       const dash = await getDashboard(searchInput)
       if (dash.status == 'ERROR') {
         setError(dash.error)
-        navigate(`/dashboard/${searchInput}`, {state: dash.error})
+        navigate(`/dashboard/${searchInput}`, {state: null})
         return
       } 
 

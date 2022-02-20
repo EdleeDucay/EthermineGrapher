@@ -71,7 +71,7 @@ export default function RoundsChart({rounds}) {
     const setDataSets = () => {
         const xData = setX()
         const yData = setY()
-        console.log(yData)
+
         setData({
             labels: xData,
             datasets: [{

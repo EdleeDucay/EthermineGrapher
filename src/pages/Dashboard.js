@@ -6,10 +6,11 @@ import MinerStatCard from '../components/MinerStatCard.js';
 import RoundsChart from '../components/RoundsChart.js';
 import SharesChart from '../components/SharesChart.js';
 import {getCurrentStats, getRounds} from '../utils/EthermineApi.js'
+import AddieAlert from '../components/AddieAlert.js';
 
 export default function Dashboard(props) {
   const {address} = useParams();
-  const [error, setError] = useState('')
+  const [error, setError] = useState(false)
   const [currentStats, setCurrentStats] = useState(null)
   const [rounds, setRounds] = useState()
   const { state } = useLocation();
@@ -26,6 +27,11 @@ export default function Dashboard(props) {
   }
 
   useEffect(() => {
+    if (!state) {
+      setError(true)
+    } else {
+      setError(false)
+    }
     fetchRounds()
     fetchCurrentStats()
     setLoading(false)
@@ -33,8 +39,11 @@ export default function Dashboard(props) {
 
   return (
     <>
-    
+    {console.log('er', error)}
+    {console.log('state', state)}
+
     <Container sx={{paddingBottom: 3}}>
+    {error && <><br/><AddieAlert/></>}
     {currentStats &&
 
     <Grid container spacing={2} pt={3} pb={3}>
@@ -71,9 +80,9 @@ export default function Dashboard(props) {
 
     }
 
-    <HashrateChart statistics={state.statistics}/>
+    {state && <HashrateChart statistics={state.statistics}/>}
     <br/>
-    <SharesChart statistics={state.statistics}/>
+    {state && <SharesChart statistics={state.statistics}/>}
     <br/>
     {rounds && <RoundsChart rounds={rounds}/>}
     </Container>

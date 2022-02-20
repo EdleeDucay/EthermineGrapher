@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { CustomThemeContext } from '../../contexts/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -51,6 +52,7 @@ const Search = styled('div')(({ theme }) => ({
 export default function Navbar({setSearchInput}) {
     const {currentTheme, setTheme} = useContext(CustomThemeContext)
     const searchRef = useRef(null)
+    const navigate = useNavigate()
 
     function handleThemeChange(event) {
         currentTheme === 'dark' ? setTheme('light') : setTheme('dark')
@@ -64,8 +66,10 @@ export default function Navbar({setSearchInput}) {
     return (
          <AppBar position='sticky'>
             <Toolbar>
-                <Link href="/home" sx={{mt: 1}}><img style={{maxHeight: 35}} src='logo192.png' alt="N/A"/></Link>
-                <Link href="/home" sx={{textDecoration: 'none'}} color={'#ffffff'}><Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography></Link>
+                <Link onClick={() => navigate('/home')} sx={{mt: 1, cursor: 'pointer'}}><img style={{maxHeight: 35}} src='logo192.png' alt="N/A"/></Link>
+                <Link onClick={() => navigate('/home')} sx={{textDecoration: 'none', cursor: 'pointer'}} color={'#ffffff'}>
+                  <Typography variant='h5' sx={{pl: 1, pr: 1, fontSize: {xs: 12, sm: 16, md: 32}}}>Ethermine Grapher</Typography>
+                </Link>
                 
                 <form onSubmit={handleSubmit}>
                     <Search >
