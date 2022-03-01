@@ -6,3 +6,18 @@ This web-app is purely frontend built. It's intended use is to have a better vie
 If you already have an Ethereum miner address, enter it into the search bar and it will take you to the miner dashboard.
 
 Note: This is intended for mining on the ethermine pool, hence only data will display for miners currently working within this pool.
+
+## Chart Examples
+Here is a preview using my current mining setup (which is just my current pc).
+
+### Hashrate Chart
+
+![](docs/hashrateChart.png)
+
+### Shares Chart
+
+![](docs/sharesChart.png)
+
+### Income Chart
+
+![](docs/incomeChart.png)
